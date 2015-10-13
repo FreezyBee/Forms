@@ -1,0 +1,27 @@
+{
+  "name": "freezy-bee/freezy-form",
+  "type": "library",
+  "description": "Form with datetime support and Bootstrap 4 form renderer",
+  "keywords": [
+    "nette",
+    "freezybee",
+    "forms"
+  ],
+  "homepage": "http://frezybee.ifire.cz",
+  "license": [
+    "BSD-3-Clause",
+    "GPL-2.0",
+    "GPL-3.0"
+  ],
+  "authors": [
+    {
+      "name": "Jakub Janata <jakubjanata@gmail.com>"
+    }
+  ],
+  "require": {
+    "nette/forms": "~2.3"
+  },
+  "autoload": {
+    "classmap": ["src/"]
+  }
+}
