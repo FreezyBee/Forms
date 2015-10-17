@@ -1,5 +1,5 @@
 {
-  "name": "freezy-bee/freezy-form",
+  "name": "freezy-bee/forms",
   "type": "library",
   "description": "Form with datetime support and Bootstrap 4 form renderer",
   "keywords": [
