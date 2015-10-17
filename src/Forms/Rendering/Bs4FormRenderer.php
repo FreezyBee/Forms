@@ -123,7 +123,7 @@ class Bs4FormRenderer extends DefaultFormRenderer
                         $class = 'btn btn-primary-outline';
                         $usedPrimary = TRUE;
                     } else {
-                        $class = 'btn btn-warning-outline';
+                        $class = 'btn btn-secondary-outline';
                     }
                     $control->getControlPrototype()->addClass($class);
                 }
