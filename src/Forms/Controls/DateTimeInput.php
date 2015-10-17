@@ -19,9 +19,9 @@ class DateTimeInput extends Nette\Forms\Controls\TextBase implements Nette\Forms
 
     /**
      * @param $caption
-     * @param bool|FALSE $useMinutes
+     * @param bool|false $useMinutes
      */
-    public function __construct($caption, $useMinutes = FALSE)
+    public function __construct($caption, $useMinutes = false)
     {
         parent::__construct($caption);
         $this->useMinutes = $useMinutes;
@@ -31,10 +31,10 @@ class DateTimeInput extends Nette\Forms\Controls\TextBase implements Nette\Forms
      * @param null $value
      * @return $this
      */
-    public function setValue($value = NULL)
+    public function setValue($value = null)
     {
-        if ($value === NULL) {
-            $this->date = NULL;
+        if ($value === null) {
+            $this->date = null;
 
         } elseif ($value instanceof \DateTimeInterface) {
             $this->date = $value;
@@ -82,7 +82,7 @@ class DateTimeInput extends Nette\Forms\Controls\TextBase implements Nette\Forms
             $this->date = Nette\Utils\DateTime::from($date);
         } catch (\Exception $e) {
             $this->addError("Špatný formát datumu...");
-            //    $this->date = NULL;
+            //    $this->date = null;
         }
     }
 
@@ -93,10 +93,10 @@ class DateTimeInput extends Nette\Forms\Controls\TextBase implements Nette\Forms
     public function getControl()
     {
         $el = parent::getControl();
-        if ($this->date !== NULL) {
+        if ($this->date !== null) {
             $value = ($this->useMinutes) ? $this->date->format('d.m.Y H:i') : $this->date->format('d.m.Y');
         } else {
-            $value = NULL;
+            $value = null;
         }
 
         $el->addAttributes([
@@ -112,6 +112,6 @@ class DateTimeInput extends Nette\Forms\Controls\TextBase implements Nette\Forms
      */
     public function isFilled()
     {
-        return $this->date !== NULL;
+        return $this->date !== null;
     }
 }

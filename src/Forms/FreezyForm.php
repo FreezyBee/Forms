@@ -13,7 +13,7 @@ class FreezyForm extends Form
 {
     /**
      * @param $name
-     * @param bool|FALSE $label
+     * @param bool|false $label
      * @param bool $useMinutes
      * @return DateTimeInput
      */

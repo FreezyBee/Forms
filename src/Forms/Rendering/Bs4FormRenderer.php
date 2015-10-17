@@ -14,26 +14,26 @@ use Nette\Utils\Html;
 class Bs4FormRenderer extends DefaultFormRenderer
 {
     /** @var Controls\Button */
-    public $primaryButton = NULL;
+    public $primaryButton = null;
 
     /** @var bool */
-    private $controlsInit = FALSE;
+    private $controlsInit = false;
 
     /** @var bool */
-    private $horizontal = TRUE;
+    private $horizontal = true;
 
     /** @var bool */
-    private $ownButtons = FALSE;
+    private $ownButtons = false;
 
     /**
      * @param string $label label div class
      * @param string $control control div class
-     * @param bool|TRUE $horizontal use horizontal form class
-     * @param bool|FALSE $ownButtons use own buttons - disable default buttons style
+     * @param bool|true $horizontal use horizontal form class
+     * @param bool|false $ownButtons use own buttons - disable default buttons style
      */
-    public function __construct($label = "col-sm-3", $control = "col-sm-9", $horizontal = TRUE, $ownButtons = FALSE)
+    public function __construct($label = "col-sm-3", $control = "col-sm-9", $horizontal = true, $ownButtons = false)
     {
-        $this->wrappers['controls']['container'] = NULL;
+        $this->wrappers['controls']['container'] = null;
         $this->wrappers['pair']['container'] = 'fieldset class=form-group';
         $this->wrappers['pair']['.error'] = 'has-error';
         $this->wrappers['control']['container'] = 'div class="' . $control . '"';
@@ -108,7 +108,7 @@ class Bs4FormRenderer extends DefaultFormRenderer
             return;
         }
 
-        $this->controlsInit = TRUE;
+        $this->controlsInit = true;
 
         if ($this->horizontal) {
             $this->form->getElementPrototype()->addClass('form-horizontal');
@@ -121,7 +121,7 @@ class Bs4FormRenderer extends DefaultFormRenderer
                     $markAsPrimary = $control === $this->primaryButton || (!isset($this->primary) && empty($usedPrimary) && $control->parent instanceof Form);
                     if ($markAsPrimary) {
                         $class = 'btn btn-primary-outline';
-                        $usedPrimary = TRUE;
+                        $usedPrimary = true;
                     } else {
                         $class = 'btn btn-secondary-outline';
                     }
