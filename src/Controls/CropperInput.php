@@ -28,7 +28,7 @@ class CropperInput extends BaseControl implements IControl
      */
     public function getControl()
     {
-        $el = Html::el('div');
+        $el = Html::el();
 
         /** @var Html $textInput */
         $textInput = parent::getControl();
@@ -38,7 +38,8 @@ class CropperInput extends BaseControl implements IControl
         if (!empty($this->params['src'])) {
             $image = Html::el('img')->addAttributes([
                 'src' => $this->params['src'],
-                'class' => 'netteCropperOldPreview'
+                'class' => 'netteCropperOldPreview',
+                'style' => 'max-width: 90%'
             ]);
             $el->add($image);
         }
