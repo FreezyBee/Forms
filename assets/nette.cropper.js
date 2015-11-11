@@ -53,7 +53,7 @@
         $('#netteCropper').on('shown.bs.modal', function () {
             var cropper = $('#netteCropperImage').cropper({
                 viewMode: 1,
-                aspectRatio: settings.aspectRation,
+                aspectRatio: settings.aspectRatio,
                 autoCropArea: 0.65,
                 dragCrop: false,
                 cropBoxMovable: true,
