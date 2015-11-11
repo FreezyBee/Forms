@@ -2,6 +2,7 @@
 
 namespace FreezyBee\Forms;
 
+use FreezyBee\Forms\Containers\CropperContainer;
 use FreezyBee\Forms\Controls\DateTimeInput;
 use Nette\Application\UI\Form;
 
@@ -24,6 +25,22 @@ class FreezyForm extends Form
         }
 
         $control = new DateTimeInput($label, $useMinutes);
+        return $this[$name] = $control;
+    }
+
+    /**
+     * @param $name
+     * @param $label
+     * @param $params
+     * @return CropperContainer
+     */
+    public function addCropperContainer($name, $label = null, $params = [])
+    {
+        if (is_null($label)) {
+            $label = $name;
+        }
+
+        $control = new CropperContainer($label, $label, $params);
         return $this[$name] = $control;
     }
 }
