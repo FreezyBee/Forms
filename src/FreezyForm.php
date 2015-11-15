@@ -41,6 +41,10 @@ class FreezyForm extends Form
         }
 
         $control = new CropperContainer($label, $label, $params);
+        if ($this->currentGroup !== null) {
+            $this->currentGroup->add($control['file']);
+            $this->currentGroup->add($control['json']);
+        }
         return $this[$name] = $control;
     }
 }
