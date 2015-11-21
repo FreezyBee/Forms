@@ -27,7 +27,7 @@
             if (cropInfo.width < settings.minWidth) {
                 window.alert('Min. dovolená šířka obrázku je ' + settings.minWidth + 'px');
                 return false;
-            } else if (cropInfo.height < settings.minWidth) {
+            } else if (cropInfo.height < settings.minHeight) {
                 window.alert('Min. dovolená výška obrázku je ' + settings.minHeight + 'px');
                 return false;
             } else {
