@@ -17,6 +17,8 @@
         $('#netteCropperFooter').html(
             '<a class="btn btn-sm btn-success-outline netteCropperZoom pull-left" data-zoom="0.1">+</a>' +
             '<a class="btn btn-sm btn-success-outline netteCropperZoom pull-left" data-zoom="-0.1">-</a>' +
+            '<span id="netteCropperInfoMin" class="pull-left" style="padding: 0 10px"></span>' +
+            '<span id="netteCropperInfoActual" class="pull-left"></span>' +
             '<a id="netteCropperOk" class="btn btn-sm btn-primary-outline" data-dismiss="modal">Uložit</a>' +
             '<a class="btn btn-sm btn-danger-outline netteCropperCancel" data-dismiss="modal">Zrušit</a>');
 
@@ -52,6 +54,9 @@
         });
 
         $('#netteCropper').on('shown.bs.modal', function () {
+
+            $('#netteCropperInfoMin').html('Min: ' + settings.minWidth + '×' + settings.minHeight + 'px');
+
             var cropper = $('#netteCropperImage').cropper({
                 viewMode: 1,
                 aspectRatio: settings.aspectRatio,
@@ -75,6 +80,9 @@
                             }
                         }
                     }
+                },
+                crop: function (e) {
+                    $('#netteCropperInfoActual').html('| Act: ' + Math.round(e.width) + '×' + Math.round(e.height) + 'px');
                 }
             });
 
