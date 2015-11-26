@@ -8,9 +8,6 @@
         var settings = $(this).data('nette-cropper');
         var name = $(this).data('nette-cropper-name');
 
-        console.log(settings);
-        console.log(name);
-
         $("<div id='netteCropper' class='modal fade'></div>").appendTo('body');
         $('#netteCropper').html("<div id='netteCropperDialog' class='modal-dialog'></div>");
         $('#netteCropperDialog').html("<div id='netteCropperContent' class='modal-content'></div>");
