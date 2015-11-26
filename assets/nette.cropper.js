@@ -6,6 +6,10 @@
         var fileUpload = this;
         var files = this.files;
         var settings = $(this).data('nette-cropper');
+        var name = $(this).data('nette-cropper-name');
+
+        console.log(settings);
+        console.log(name);
 
         $("<div id='netteCropper' class='modal fade'></div>").appendTo('body');
         $('#netteCropper').html("<div id='netteCropperDialog' class='modal-dialog'></div>");
@@ -31,8 +35,8 @@
                 window.alert('Min. dovolená výška obrázku je ' + settings.minHeight + 'px');
                 return false;
             } else {
-                $('.netteCropperOldPreview').hide();
-                $('.netteCropperJson').val([
+                $('.netteCropperOldPreview[data-nette-cropper-name="' + name + '"]').hide();
+                $('.netteCropperJson[data-nette-cropper-name="' + name + '"]').val([
                     '{"x":' + cropInfo.x,
                     '"y":' + cropInfo.y,
                     '"height":' + cropInfo.height,

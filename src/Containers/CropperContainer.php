@@ -21,11 +21,13 @@ class CropperContainer extends Nette\Forms\Container
 
     /**
      * CropperContainer constructor.
-     * @param $name
-     * @param $label
+     * @param Nette\ComponentModel\IContainer $name
+     * @param null $label
      * @param $params
+     * @param $containerName
+     * @throws Nette\Utils\JsonException
      */
-    public function __construct($name, $label, $params)
+    public function __construct($name, $label, $params, $containerName)
     {
         parent::__construct();
 
@@ -34,10 +36,11 @@ class CropperContainer extends Nette\Forms\Container
         $this->addUpload('file', $label)
             ->setAttribute('class', 'netteCropperFileUpload')
             ->setAttribute('data-nette-cropper', Nette\Utils\Json::encode($this->dataParams))
+            ->setAttribute('data-nette-cropper-name', $containerName)
             ->addCondition(Nette\Forms\Form::FILLED)
             ->addRule(Nette\Forms\Form::IMAGE);
 
-        $this['json'] = new CropperInput('', $params);
+        $this['json'] = new CropperInput('', $params, $containerName);
     }
 
     /**

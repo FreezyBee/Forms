@@ -17,9 +17,15 @@ class CropperInput extends BaseControl implements IControl
      */
     private $params;
 
-    public function __construct($caption, $params)
+    /**
+     * @var string
+     */
+    private $containerName;
+
+    public function __construct($caption, $params, $containerName)
     {
         $this->params = $params;
+        $this->containerName = $containerName;
         parent::__construct($caption);
     }
 
@@ -33,12 +39,17 @@ class CropperInput extends BaseControl implements IControl
         /** @var Html $textInput */
         $textInput = parent::getControl();
 
-        $el->add($textInput->addAttributes(['hidden' => 'hidden', 'class' => 'netteCropperJson']));
+        $el->add($textInput->addAttributes([
+            'hidden' => 'hidden',
+            'class' => 'netteCropperJson',
+            'data-nette-cropper-name' => $this->containerName
+        ]));
 
         if (!empty($this->params['src'])) {
             $image = Html::el('img')->addAttributes([
                 'src' => $this->params['src'],
                 'class' => 'netteCropperOldPreview',
+                'data-nette-cropper-name' => $this->containerName,
                 'style' => 'max-width: 90%'
             ]);
             $el->add($image);
