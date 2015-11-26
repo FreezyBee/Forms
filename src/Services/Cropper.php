@@ -24,6 +24,11 @@ class Cropper extends \Nette\Object
     private $image;
 
     /**
+     * @var bool
+     */
+    private $cropped = false;
+
+    /**
      * Tohle prislo z FE od klienta
      * @var ArrayHash
      */
@@ -98,6 +103,10 @@ class Cropper extends \Nette\Object
      */
     public function crop()
     {
+        if ($this->cropped) {
+            return $this->image;
+        }
+
         if ($this->image && $this->settings) {
             $settings = $this->settings;
 
@@ -106,6 +115,7 @@ class Cropper extends \Nette\Object
             $cropWidth = $settings->width;
             $cropHeight = $settings->height;
 
+            $this->cropped = true;
             return $this->image->crop($cropX, $cropY, $cropWidth, $cropHeight);
         } elseif ($this->required) {
             throw new \Exception('WTF?');
