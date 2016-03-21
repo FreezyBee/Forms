@@ -17,6 +17,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class FormService extends Object
 {
+    /** @var array */
+    private $config;
+
     /** @var EntityManager */
     private $em;
 
@@ -28,15 +31,21 @@ class FormService extends Object
 
     /**
      * BaseRepository constructor.
+     * @param array $config
      * @param EntityManager $em
      * @param EntityFormMapper $formMapper
      * @param ValidatorInterface $validator
      */
-    public function __construct(EntityManager $em, EntityFormMapper $formMapper, ValidatorInterface $validator)
-    {
+    public function __construct(
+        array $config,
+        EntityManager $em,
+        EntityFormMapper $formMapper,
+        ValidatorInterface $validator
+    ) {
         $this->em = $em;
         $this->formMapper = $formMapper;
         $this->validator = $validator;
+        $this->config = $config;
     }
 
     /**
@@ -59,13 +68,20 @@ class FormService extends Object
     /**
      * @param $entity
      * @param Form $form
+     * @throws ValidatorException
      */
     public function softSaveForm($entity, Form &$form)
     {
         $this->formMapper->save($entity, $form);
 
         $errors = $this->validate($entity);
+
         if (count($errors)) {
+            if ($this->config['applyErrors']) {
+                foreach ($errors as $error) {
+                    $form[$error->getPropertyPath()]->addError($error->getMessage());
+                }
+            }
             throw new ValidatorException($errors);
         }
     }
