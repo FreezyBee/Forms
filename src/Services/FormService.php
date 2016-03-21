@@ -2,6 +2,7 @@
 
 namespace FreezyBee\Forms\Services;
 
+use FreezyBee\Forms\ValidatorException;
 use Nette\Object;
 use Nette\Forms\Form;
 
