@@ -62,12 +62,12 @@ class FormService extends Object
      */
     public function softSaveForm($entity, Form &$form)
     {
+        $this->formMapper->save($entity, $form);
+
         $errors = $this->validate($entity);
         if (count($errors)) {
             throw new ValidatorException($errors);
         }
-
-        $this->formMapper->save($entity, $form);
     }
 
     /**
