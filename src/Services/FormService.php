@@ -79,7 +79,10 @@ class FormService extends Object
         if (count($errors)) {
             if ($this->config['applyErrors']) {
                 foreach ($errors as $error) {
-                    $form[$error->getPropertyPath()]->addError($error->getMessage());
+                    $component = $form->getComponent($error->getPropertyPath(), false);
+                    if ($component) {
+                        $component->addError($error->getMessage());
+                    }
                 }
             }
             throw new ValidatorException($errors);
