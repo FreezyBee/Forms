@@ -8,6 +8,7 @@ use Nette\Forms\Form;
 
 use Kdyby\Doctrine\EntityManager;
 use Kdyby\DoctrineForms\EntityFormMapper;
+use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -75,6 +76,7 @@ class FormService extends Object
         $this->formMapper->save($entity, $form);
 
         $errors = $this->validate($entity);
+        $unclassifiableErrors = new ConstraintViolationList;
 
         if (count($errors)) {
             if ($this->config['applyErrors']) {
@@ -82,10 +84,13 @@ class FormService extends Object
                     $component = $form->getComponent($error->getPropertyPath(), false);
                     if ($component) {
                         $component->addError($error->getMessage());
+                    } else {
+                        $unclassifiableErrors->add($error);
                     }
                 }
             }
-            throw new ValidatorException($errors);
+            
+            throw new ValidatorException($errors, $unclassifiableErrors);
         }
     }
 
