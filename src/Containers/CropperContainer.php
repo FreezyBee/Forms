@@ -50,7 +50,7 @@ class CropperContainer extends Nette\Forms\Container
      */
     public function getValues($asArray = false)
     {
-        return $this->cropper->crop();
+        return $this->cropper ? $this->cropper->crop() : [];
     }
 
     /**
@@ -65,11 +65,11 @@ class CropperContainer extends Nette\Forms\Container
 
         parent::validate($controls);
 
-        if (!$file->hasErrors()) {
+        if ($file->isOk()) {
             try {
                 $this->cropper = new Cropper($file, $this['json'], $this->dataParams);
             } catch (CropperException $e) {
-                $this['file']->addError($e->getMessage());
+                $file->addError($e->getMessage());
             }
         }
     }
