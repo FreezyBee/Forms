@@ -4,6 +4,7 @@ namespace FreezyBee\Forms;
 
 use FreezyBee\Forms\Containers\CropperContainer;
 use FreezyBee\Forms\Controls\DateTimeInput;
+use FreezyBee\Forms\Controls\SoundInput;
 use Nette\Application\UI\Form;
 
 /**
@@ -45,6 +46,21 @@ class FreezyForm extends Form
             $this->currentGroup->add($control['file']);
             $this->currentGroup->add($control['json']);
         }
+        return $this[$name] = $control;
+    }
+
+    /**
+     * @param $name
+     * @param bool|false $label
+     * @return SoundInput
+     */
+    public function addSoundUpload($name, $label = false)
+    {
+        if ($label === false) {
+            $label = $name;
+        }
+
+        $control = new SoundInput($label);
         return $this[$name] = $control;
     }
 }

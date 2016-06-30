@@ -34,12 +34,14 @@ class CropperInput extends BaseControl implements IControl
      */
     public function getControl()
     {
+        $add = (method_exists('Nette\Utils\Html', 'addHtml')) ? 'addHtml' : 'add';
+
         $el = Html::el();
 
         /** @var Html $textInput */
         $textInput = parent::getControl();
 
-        $el->add($textInput->addAttributes([
+        $el->$add($textInput->addAttributes([
             'hidden' => 'hidden',
             'class' => 'netteCropperJson',
             'data-nette-cropper-name' => $this->containerName
@@ -52,7 +54,7 @@ class CropperInput extends BaseControl implements IControl
                 'data-nette-cropper-name' => $this->containerName,
                 'style' => 'max-width: 90%'
             ]);
-            $el->add($image);
+            $el->$add($image);
         }
 
         return $el;
