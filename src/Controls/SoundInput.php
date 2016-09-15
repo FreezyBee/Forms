@@ -2,6 +2,7 @@
 
 namespace FreezyBee\Forms\Controls;
 
+use FreezyBee\Forms\Utils\FileSizeElement;
 use Nette\Forms\Controls\UploadControl;
 use Nette\Utils\Html;
 
@@ -37,13 +38,20 @@ class SoundInput extends UploadControl
     {
         $add = (method_exists('Nette\Utils\Html', 'addHtml')) ? 'addHtml' : 'add';
 
+        $control = parent::getControl()->setAttribute('accept', '.mp3');
+
         if ($this->filePath) {
-            return Html::el()->$add(parent::getControl()->setAttribute('accept', '.mp3'))
+            $el = Html::el();
+
+            $el->$add($control)
                 ->$add(Html::el()->setHtml('<br><audio controls><source src="' . $this->filePath . '" type="audio/mpeg">
                     Your browser does not support the audio element.</audio>'));
 
+            $el->$add(new FileSizeElement($this->filePath));
+
+            return $el;
         } else {
-            return parent::getControl();
+            return $control;
         }
     }
 
@@ -51,10 +59,10 @@ class SoundInput extends UploadControl
      * @param $value
      * @return static
      */
-    public function setValue($value)
+    public function setDefaultValue($value)
     {
         $this->filePath = $value;
-        return parent::setValue($value);
+        return parent::setDefaultValue($value);
     }
 
     /**

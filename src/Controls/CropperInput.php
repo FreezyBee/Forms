@@ -2,6 +2,7 @@
 
 namespace FreezyBee\Forms\Controls;
 
+use FreezyBee\Forms\Utils\FileSizeElement;
 use Nette\Forms\Controls\BaseControl;
 use Nette\Forms\IControl;
 use Nette\Utils\Html;
@@ -48,6 +49,10 @@ class CropperInput extends BaseControl implements IControl
         ]));
 
         if (!empty($this->params['src'])) {
+            if (!empty($this->params['wwwDir'])) {
+                $el->$add(new FileSizeElement($this->params['wwwDir'] . $this->params['src'], $this->params['src']));
+            }
+
             $image = Html::el('img')->addAttributes([
                 'src' => $this->params['src'],
                 'class' => 'netteCropperOldPreview',
