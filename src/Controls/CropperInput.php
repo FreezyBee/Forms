@@ -54,7 +54,7 @@ class CropperInput extends BaseControl implements IControl
             }
 
             $image = Html::el('img')->addAttributes([
-                'src' => $this->params['src'],
+                'src' => $this->params['src'] . '?v=' . date('YmdHi'),
                 'class' => 'netteCropperOldPreview',
                 'data-nette-cropper-name' => $this->containerName,
                 'style' => 'max-width: 90%'
