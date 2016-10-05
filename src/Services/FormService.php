@@ -3,6 +3,8 @@
 namespace FreezyBee\Forms\Services;
 
 use FreezyBee\Forms\ValidatorException;
+use Nette\Forms\Container;
+use Nette\Forms\Controls\BaseControl;
 use Nette\Object;
 use Nette\Forms\Form;
 
@@ -58,6 +60,24 @@ class FormService extends Object
     }
 
     /**
+     * @param object $entity
+     * @param BaseControl|Container $formElement
+     */
+    public function load($entity, $formElement)
+    {
+        $this->formMapper->load($entity, $formElement);
+    }
+
+    /**
+     * @param object $entity
+     * @param BaseControl|Container $formElement
+     */
+    public function save($entity, $formElement)
+    {
+        $this->formMapper->save($entity, $formElement);
+    }
+
+    /**
      * @param $entity
      * @param Form $form
      */
@@ -89,7 +109,7 @@ class FormService extends Object
                     }
                 }
             }
-            
+
             throw new ValidatorException($errors, $unclassifiableErrors);
         }
     }
