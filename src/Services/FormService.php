@@ -101,8 +101,8 @@ class FormService extends Object
         if (count($errors)) {
             if ($this->config['applyErrors']) {
                 foreach ($errors as $error) {
-                    $component = $form->getComponent($error->getPropertyPath(), false);
-                    if ($component) {
+                    $component = $form->getComponent(str_replace('.', '-', $error->getPropertyPath()), false);
+                    if ($component instanceof BaseControl) {
                         $component->addError($error->getMessage());
                     } else {
                         $unclassifiableErrors->add($error);
