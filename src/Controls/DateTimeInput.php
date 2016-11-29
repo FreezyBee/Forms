@@ -24,7 +24,6 @@ class DateTimeInput extends TextBase implements IControl
     {
         parent::__construct($caption);
         $this->useMinutes = $useMinutes;
-        $this->getControlPrototype()->setAttribute('type', 'date');
     }
 
     /**
