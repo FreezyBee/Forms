@@ -16,18 +16,23 @@ class DateTimeInput extends TextBase implements IControl
     /** @var bool */
     private $useMinutes;
 
+    /** @var bool */
+    private $allowNull;
+
     /**
-     * @param $caption
-     * @param bool|false $useMinutes
+     * @param string $caption
+     * @param bool $useMinutes
+     * @param bool $allowNull
      */
-    public function __construct($caption = null, $useMinutes = false)
+    public function __construct($caption = null, $useMinutes = false, $allowNull = false)
     {
         parent::__construct($caption);
         $this->useMinutes = $useMinutes;
+        $this->allowNull = $allowNull;
     }
 
     /**
-     * @param null $value
+     * @param mixed $value
      * @return $this
      */
     public function setValue($value = null)
@@ -52,10 +57,14 @@ class DateTimeInput extends TextBase implements IControl
     {
         $date = $this->getHttpData(Form::DATA_LINE);
 
-        try {
-            $this->value = DateTime::from($date);
-        } catch (\Exception $e) {
-            $this->addError("Špatný formát datumu...");
+        if ($date === '' && $this->allowNull) {
+            $this->value = null;
+        } else {
+            try {
+                $this->value = DateTime::from($date);
+            } catch (\Exception $e) {
+                $this->addError('Špatný formát datumu...');
+            }
         }
     }
 
@@ -67,7 +76,7 @@ class DateTimeInput extends TextBase implements IControl
     {
         $el = parent::getControl();
         if ($this->value instanceof \DateTimeInterface) {
-            $value = ($this->useMinutes) ? $this->value->format('d.m.Y H:i') : $this->value->format('d.m.Y');
+            $value = $this->useMinutes ? $this->value->format('d.m.Y H:i') : $this->value->format('d.m.Y');
         } else {
             $value = null;
         }

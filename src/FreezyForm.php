@@ -14,18 +14,19 @@ use Nette\Application\UI\Form;
 class FreezyForm extends Form
 {
     /**
-     * @param $name
-     * @param bool|false $label
+     * @param string $name
+     * @param string|null $label
      * @param bool $useMinutes
+     * @param bool $allowNull
      * @return DateTimeInput
      */
-    public function addDateTime($name, $label = false, $useMinutes = false)
+    public function addDateTime($name, $label = null, $useMinutes = false, $allowNull = false)
     {
-        if ($label === false) {
+        if ($label === null) {
             $label = $name;
         }
 
-        $control = new DateTimeInput($label, $useMinutes);
+        $control = new DateTimeInput($label, $useMinutes, $allowNull);
         return $this[$name] = $control;
     }
 
