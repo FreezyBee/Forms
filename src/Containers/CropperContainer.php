@@ -5,7 +5,9 @@ namespace FreezyBee\Forms\Containers;
 use FreezyBee\Forms\Controls\CropperInput;
 use FreezyBee\Forms\CropperException;
 use FreezyBee\Forms\Services\Cropper;
+use FreezyBee\Forms\Utils\CropperImage;
 use Nette;
+use Nette\Forms\Controls\UploadControl;
 
 /**
  * Class CropperContainer
@@ -17,21 +19,21 @@ class CropperContainer extends Nette\Forms\Container
     private $cropper;
 
     /** @var array */
-    private $dataParams = [];
+    private $dataParams;
 
     /**
      * CropperContainer constructor.
-     * @param Nette\ComponentModel\IContainer $name
-     * @param null $label
-     * @param $params
-     * @param $containerName
+     * @param string $name
+     * @param string $label
+     * @param array $params
+     * @param string $containerName
      * @throws Nette\Utils\JsonException
      */
-    public function __construct($name, $label, $params, $containerName)
+    public function __construct(string $name, string $label, array $params, string $containerName)
     {
         parent::__construct();
 
-        $this->dataParams = isset($params['data']) ? $params['data'] : [];
+        $this->dataParams = $params['data'] ?? [];
 
         $this->addUpload('file', $label)
             ->setAttribute('class', 'netteCropperFileUpload')
@@ -46,7 +48,7 @@ class CropperContainer extends Nette\Forms\Container
     /**
      * Returns the values submitted by the form.
      * @param  bool  return values as an array?
-     * @return Nette\Utils\ArrayHash|array
+     * @return CropperImage|null|array
      */
     public function getValues($asArray = false)
     {
@@ -60,14 +62,16 @@ class CropperContainer extends Nette\Forms\Container
      */
     public function validate(array $controls = null)
     {
-        /** @var Nette\Forms\Controls\UploadControl $file */
+        /** @var UploadControl $file */
         $file = $this['file'];
 
         parent::validate($controls);
 
         if ($file->isOk()) {
             try {
-                $this->cropper = new Cropper($file, $this['json'], $this->dataParams);
+                /** @var CropperInput $jsonControl */
+                $jsonControl = $this['json'];
+                $this->cropper = new Cropper($file, $jsonControl, $this->dataParams);
             } catch (CropperException $e) {
                 $file->addError($e->getMessage());
             }
@@ -76,6 +80,8 @@ class CropperContainer extends Nette\Forms\Container
 
     public function setRequired()
     {
-        $this['file']->setRequired();
+        /** @var UploadControl $fileControl */
+        $fileControl = $this['file'];
+        $fileControl->setRequired();
     }
 }
