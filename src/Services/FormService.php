@@ -5,11 +5,11 @@ namespace FreezyBee\Forms\Services;
 use FreezyBee\Forms\ValidatorException;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
-use Nette\Object;
 use Nette\Forms\Form;
 
 use Kdyby\Doctrine\EntityManager;
 use Kdyby\DoctrineForms\EntityFormMapper;
+use Nette\SmartObject;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -18,8 +18,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * Class FormService
  * @package FreezyBee\Forms\Services
  */
-class FormService extends Object
+class FormService
 {
+    use SmartObject;
+
     /** @var array */
     private $config;
 

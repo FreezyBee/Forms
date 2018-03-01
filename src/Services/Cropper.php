@@ -8,6 +8,7 @@ use FreezyBee\Forms\Utils\CropperImage;
 
 use Nette\Forms\Controls\UploadControl;
 use Nette\Http\FileUpload;
+use Nette\SmartObject;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Json;
 use Nette\Utils\JsonException;
@@ -16,8 +17,10 @@ use Nette\Utils\JsonException;
  * Class Cropper
  * @package FreezyBee\Forms\Services
  */
-class Cropper extends \Nette\Object
+class Cropper
 {
+    use SmartObject;
+
     /**
      * @var CropperImage
      */
