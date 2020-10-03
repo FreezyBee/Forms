@@ -113,10 +113,10 @@ class Cropper
         if ($this->image && $this->settings) {
             $settings = $this->settings;
 
-            $cropX = $settings->x;
-            $cropY = $settings->y;
-            $cropWidth = $settings->width;
-            $cropHeight = $settings->height;
+            $cropX = (int) $settings->x;
+            $cropY = (int) $settings->y;
+            $cropWidth = (int) $settings->width;
+            $cropHeight = (int) $settings->height;
 
             $this->cropped = true;
             return $this->image->crop($cropX, $cropY, $cropWidth, $cropHeight);

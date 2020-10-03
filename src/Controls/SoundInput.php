@@ -12,14 +12,7 @@ use Nette\Utils\Html;
  */
 class SoundInput extends UploadControl
 {
-    /**
-     * @var string
-     */
-    private $params;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $filePath;
 
     /**
@@ -36,23 +29,21 @@ class SoundInput extends UploadControl
      */
     public function getControl()
     {
-        $add = (method_exists('Nette\Utils\Html', 'addHtml')) ? 'addHtml' : 'add';
-
         $control = parent::getControl()->setAttribute('accept', '.mp3');
 
         if ($this->filePath) {
             $el = Html::el();
 
-            $el->$add($control)
-                ->$add(Html::el()->setHtml('<br><audio controls><source src="' . $this->filePath . '" type="audio/mpeg">
+            $el->addHtml($control)
+                ->addHtml(Html::el()->setHtml('<br><audio controls><source src="' . $this->filePath . '" type="audio/mpeg">
                     Your browser does not support the audio element.</audio>'));
 
-            $el->$add(new FileSizeElement($this->filePath));
+            $el->addHtml(new FileSizeElement($this->filePath));
 
             return $el;
-        } else {
-            return $control;
         }
+
+        return $control;
     }
 
     /**

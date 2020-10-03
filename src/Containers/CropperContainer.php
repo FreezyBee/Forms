@@ -21,18 +21,8 @@ class CropperContainer extends Nette\Forms\Container
     /** @var array */
     private $dataParams;
 
-    /**
-     * CropperContainer constructor.
-     * @param string $name
-     * @param string $label
-     * @param array $params
-     * @param string $containerName
-     * @throws Nette\Utils\JsonException
-     */
     public function __construct(string $name, string $label, array $params, string $containerName)
     {
-        parent::__construct();
-
         $this->dataParams = $params['data'] ?? [];
 
         $this->addUpload('file', $label)
@@ -60,7 +50,7 @@ class CropperContainer extends Nette\Forms\Container
      * @param Nette\Forms\IControl[]
      * @return void
      */
-    public function validate(array $controls = null)
+    public function validate(array $controls = null): void
     {
         /** @var UploadControl $file */
         $file = $this['file'];

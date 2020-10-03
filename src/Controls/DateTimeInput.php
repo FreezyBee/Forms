@@ -4,14 +4,10 @@ namespace FreezyBee\Forms\Controls;
 
 use Nette\Forms\Controls\TextBase;
 use Nette\Forms\Form;
-use Nette\Forms\IControl;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 
-/**
- * Class DateTimeInput
- * @package FreezyBee\Forms\Controls
- */
-class DateTimeInput extends TextBase implements IControl
+class DateTimeInput extends TextBase
 {
     /** @var bool */
     private $useMinutes;
@@ -50,10 +46,7 @@ class DateTimeInput extends TextBase implements IControl
         return $this;
     }
 
-    /**
-     *
-     */
-    public function loadHttpData()
+    public function loadHttpData(): void
     {
         $date = $this->getHttpData(Form::DATA_LINE);
 
@@ -68,11 +61,7 @@ class DateTimeInput extends TextBase implements IControl
         }
     }
 
-
-    /**
-     * @return mixed
-     */
-    public function getControl()
+    public function getControl(): Html
     {
         $el = parent::getControl();
         if ($this->value instanceof \DateTimeInterface) {

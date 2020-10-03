@@ -4,26 +4,17 @@ namespace FreezyBee\Forms\Controls;
 
 use FreezyBee\Forms\Utils\FileSizeElement;
 use Nette\Forms\Controls\BaseControl;
-use Nette\Forms\IControl;
 use Nette\Utils\Html;
 
-/**
- * Class CropperInput
- * @package FreezyBee\Forms\Controls
- */
-class CropperInput extends BaseControl implements IControl
+class CropperInput extends BaseControl
 {
-    /**
-     * @var string
-     */
+    /** @var array */
     private $params;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $containerName;
 
-    public function __construct($caption, $params, $containerName)
+    public function __construct(string $caption, array $params, string $containerName)
     {
         $this->params = $params;
         $this->containerName = $containerName;
@@ -35,14 +26,12 @@ class CropperInput extends BaseControl implements IControl
      */
     public function getControl()
     {
-        $add = (method_exists('Nette\Utils\Html', 'addHtml')) ? 'addHtml' : 'add';
-
         $el = Html::el();
 
         /** @var Html $textInput */
         $textInput = parent::getControl();
 
-        $el->$add($textInput->addAttributes([
+        $el->addHtml($textInput->addAttributes([
             'hidden' => 'hidden',
             'class' => 'netteCropperJson',
             'data-nette-cropper-name' => $this->containerName
@@ -50,7 +39,7 @@ class CropperInput extends BaseControl implements IControl
 
         if (!empty($this->params['src'])) {
             if (!empty($this->params['wwwDir'])) {
-                $el->$add(new FileSizeElement($this->params['wwwDir'] . $this->params['src'], $this->params['src']));
+                $el->addHtml(new FileSizeElement($this->params['wwwDir'] . $this->params['src'], $this->params['src']));
             }
 
             $image = Html::el('img')->addAttributes([
@@ -59,7 +48,7 @@ class CropperInput extends BaseControl implements IControl
                 'data-nette-cropper-name' => $this->containerName,
                 'style' => 'max-width: 90%'
             ]);
-            $el->$add($image);
+            $el->addHtml($image);
         }
 
         return $el;
