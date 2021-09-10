@@ -74,7 +74,7 @@ class Bs3FormRenderer extends DefaultFormRenderer
     }
 
 
-    public function renderPair(Nette\Forms\IControl $control): string
+    public function renderPair(Nette\Forms\Control $control): string
     {
         $this->controlsInit();
         return parent::renderPair($control);
@@ -88,14 +88,14 @@ class Bs3FormRenderer extends DefaultFormRenderer
     }
 
 
-    public function renderLabel(Nette\Forms\IControl $control): Html
+    public function renderLabel(Nette\Forms\Control $control): Html
     {
         $this->controlsInit();
         return parent::renderLabel($control);
     }
 
 
-    public function renderControl(Nette\Forms\IControl $control): Html
+    public function renderControl(Nette\Forms\Control $control): Html
     {
         $this->controlsInit();
         return parent::renderControl($control);

@@ -27,9 +27,9 @@
   "autoload": {
     "psr-4": {
       "FreezyBee\\Forms\\": "src/"
-    },
-    "classmap": [
-      "src/exceptions.php"
-    ]
+    }
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^0.12.98"
   }
 }

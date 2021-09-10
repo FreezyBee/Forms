@@ -15,20 +15,20 @@ use Nette\Forms\Controls\UploadControl;
  */
 class CropperContainer extends Nette\Forms\Container
 {
-    /** @var Cropper */
+    /** @var Cropper|null */
     private $cropper;
 
-    /** @var array */
+    /** @var array<mixed> */
     private $dataParams;
 
-    public function __construct(string $name, string $label, array $params, string $containerName)
+    public function __construct(string $label, array $params, string $containerName)
     {
         $this->dataParams = $params['data'] ?? [];
 
         $this->addUpload('file', $label)
-            ->setAttribute('class', 'netteCropperFileUpload')
-            ->setAttribute('data-nette-cropper', Nette\Utils\Json::encode($this->dataParams))
-            ->setAttribute('data-nette-cropper-name', $containerName)
+            ->setHtmlAttribute('class', 'netteCropperFileUpload')
+            ->setHtmlAttribute('data-nette-cropper', Nette\Utils\Json::encode($this->dataParams))
+            ->setHtmlAttribute('data-nette-cropper-name', $containerName)
             ->addCondition(Nette\Forms\Form::FILLED)
             ->addRule(Nette\Forms\Form::IMAGE);
 
@@ -36,19 +36,17 @@ class CropperContainer extends Nette\Forms\Container
     }
 
     /**
-     * Returns the values submitted by the form.
-     * @param  bool  return values as an array?
+     * {@inheritDoc}
      * @return CropperImage|null|array
      */
-    public function getValues($asArray = false)
+    public function getUnsafeValues($returnType = null, array $controls = null)
     {
         return $this->cropper ? $this->cropper->crop() : [];
     }
 
     /**
      * Performs the server side validation.
-     * @param Nette\Forms\IControl[]
-     * @return void
+     * @param Nette\Forms\Control[]|null $controls
      */
     public function validate(array $controls = null): void
     {
@@ -68,7 +66,7 @@ class CropperContainer extends Nette\Forms\Container
         }
     }
 
-    public function setRequired()
+    public function setRequired(): void
     {
         /** @var UploadControl $fileControl */
         $fileControl = $this['file'];

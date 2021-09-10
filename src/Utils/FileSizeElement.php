@@ -34,14 +34,13 @@ class FileSizeElement extends Html
         }
     }
 
-    /**
-     * @param $filename
-     * @return int
-     */
-    private function getFilesize($filename)
+    private function getFilesize(string $filename): int
     {
         if (filter_var($filename, FILTER_VALIDATE_URL)) {
             $ch = curl_init($filename);
+            if ($ch === false) {
+                return 0;
+            }
 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HEADER, true);
@@ -51,13 +50,13 @@ class FileSizeElement extends Html
             $size = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 
             curl_close($ch);
-            return intval($size);
-
-        } elseif (file_exists($filename)) {
-            return intval(filesize($filename));
-
-        } else {
-            return 0;
+            return (int) $size;
         }
+
+        if (file_exists($filename)) {
+            return (int) filesize($filename);
+        }
+
+        return 0;
     }
 }

@@ -26,7 +26,7 @@ class CropperImage extends Image
     /**
      * @param string $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

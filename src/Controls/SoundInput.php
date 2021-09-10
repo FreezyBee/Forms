@@ -47,8 +47,7 @@ class SoundInput extends UploadControl
     }
 
     /**
-     * @param $value
-     * @return static
+     * @inheritDoc
      */
     public function setDefaultValue($value)
     {

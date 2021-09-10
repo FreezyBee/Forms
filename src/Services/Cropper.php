@@ -22,7 +22,7 @@ class Cropper
     use SmartObject;
 
     /**
-     * @var CropperImage
+     * @var CropperImage|null
      */
     private $image;
 
@@ -33,13 +33,13 @@ class Cropper
 
     /**
      * Tohle prislo z FE od klienta
-     * @var ArrayHash
+     * @var ArrayHash<mixed>|null
      */
     private $settings;
 
     /**
      * Nastaveni serveru
-     * @var array
+     * @var array<string, mixed>
      */
     private $params;
 
@@ -52,20 +52,21 @@ class Cropper
      * Cropper constructor.
      * @param UploadControl $fileControl
      * @param CropperInput $jsonControl
-     * @param array $params
+     * @param array<string, mixed> $params
      */
-    public function __construct(UploadControl $fileControl, CropperInput $jsonControl, $params = [])
+    public function __construct(UploadControl $fileControl, CropperInput $jsonControl, array $params = [])
     {
         $this->required = $fileControl->isRequired();
         $this->setImage($fileControl->getValue());
         $this->setSettings($jsonControl->getValue());
+        $this->params = $params;
     }
 
     /**
      * @param string $json
      * @throws CropperException
      */
-    private function setSettings($json)
+    private function setSettings($json): void
     {
         try {
             $this->settings = Json::decode($json);
@@ -78,7 +79,7 @@ class Cropper
      * @param FileUpload $file
      * @throws CropperException
      */
-    private function setImage(FileUpload $file)
+    private function setImage(FileUpload $file): void
     {
         if ($file->isImage() && $file->isOk()) {
             $image = CropperImage::fromFile($file->getTemporaryFile());
@@ -87,8 +88,8 @@ class Cropper
             $imgWidth = $image->getWidth();
             $imgHeight = $image->getHeight();
 
-            $minWidth = (isset($this->params['minWidth']) ? $this->params['minWidth'] : 0);
-            $minHeight = (isset($this->params['minHeight']) ? $this->params['minHeight'] : 0);
+            $minWidth = $this->params['minWidth'] ?? 0;
+            $minHeight = $this->params['minHeight'] ?? 0;
 
             if ($imgHeight < $minHeight || $imgWidth < $minWidth) {
                 throw new CropperException('bad size');
@@ -120,10 +121,12 @@ class Cropper
 
             $this->cropped = true;
             return $this->image->crop($cropX, $cropY, $cropWidth, $cropHeight);
-        } elseif ($this->required) {
-            throw new \Exception('WTF?');
-        } else {
-            return null;
         }
+
+        if ($this->required) {
+            throw new \Exception('WTF?');
+        }
+
+        return null;
     }
 }
